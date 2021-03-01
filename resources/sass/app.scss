@@ -1,0 +1,59 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+// $fa-font-path: "../webfonts";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+
+:root{
+    --primary:#6f42c1
+}
+
+.text-primary{
+    color: var(--primary) !important;
+}
+.bg-primary{
+    background-color: var(--primary) !important;
+}
+.btn-primary {
+    color: #fff;
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+
+
+
+
+//// custom class
+.pointer{
+    cursor: pointer !important;
+}
+
+// star
+.badge_card_product {
+    position: absolute;
+    top: -10px;
+    left: 370px !important;
+    z-index: 2;
+}
+
+.text_badge_product_card_top {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 22px;
+    color: #ffffff;
+}
+
+
+// Message
+#chat-container{
+    height: 400px !important;
+}

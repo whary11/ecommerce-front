@@ -21,7 +21,14 @@ Route::get('chat/{any?}',  function () {
     return view('chat');
 })->where('any', '^(?!api\/)[\/\w\.-]*');
 
-
+// Rutas para productos
 Route::prefix('product')->group(function () {
     Route::get('/detail/{slug}', "ProductController@detail");
 });
+
+// Rutas para la compra
+Route::prefix('purchase')->group(function () {
+    Route::get('/checkout', "PurchaseController@checkout");
+});
+
+

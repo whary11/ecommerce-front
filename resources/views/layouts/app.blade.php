@@ -55,7 +55,7 @@
 
 </head>
 <body>
-    @yield('content', 'Default content')
+    @yield('content')
     
     <!-- footer start -->
     @include('layouts.footer')
@@ -826,7 +826,7 @@
            document.getElementById("search-overlay").style.display = "none";
        }
     </script>
-    @yield('scripts', 'Default content')
+    @yield('scripts')
 </body>
 
 

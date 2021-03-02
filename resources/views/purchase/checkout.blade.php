@@ -3,9 +3,7 @@
 
 
 
-    <!-- header start -->
-    @include('layouts.header')
-    <!-- header end -->
+    
 
     <!-- breadcrumb start -->
     {{-- @include('layouts.breadcrumb') --}}

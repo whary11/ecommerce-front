@@ -5,6 +5,9 @@
 @endsection
 
     @section('content')
+    
+
+    
         <!-- loader start -->
         <div class="loader_skeleton">
             <header>
@@ -191,12 +194,6 @@
         </div>
         <!-- loader end -->
 
-
-        <!-- header start -->
-        @include('layouts.header')
-        <!-- header end -->
-
-
         <!-- breadcrumb start -->
         @include('layouts.breadcrumb')
         <!-- breadcrumb End -->
@@ -209,28 +206,40 @@
                     <div class="row">
                         <div class="col-lg-5 col-sm-10 col-xs-12">
                             <div class="product-right-slick">
-                                <div><img src="/assets/images/pro3/1.jpg" alt=""
-                                        class="img-fluid blur-up lazyload image_zoom_cls-0"></div>
-                                <div><img src="/assets/images/pro3/2.jpg" alt=""
+                                @foreach ($product["references"] as $references)
+                                    @foreach ($references["images"] as $image)
+                                        <div><img src="{{ $image["url"] }}" alt=""
+                                            class="img-fluid blur-up lazyload image_zoom_cls-0"></div>
+                                        
+                                    @endforeach
+                                @endforeach
+                                
+                                {{-- <div><img src="/assets/images/pro3/2.jpg" alt=""
                                         class="img-fluid blur-up lazyload image_zoom_cls-0"></div>
                                 <div><img src="/assets/images/pro3/27.jpg" alt=""
                                         class="img-fluid blur-up lazyload image_zoom_cls-0"></div>
                                 <div><img src="/assets/images/pro3/27.jpg" alt=""
-                                        class="img-fluid blur-up lazyload image_zoom_cls-0"></div>
+                                        class="img-fluid blur-up lazyload image_zoom_cls-0"></div> --}}
                             </div>
                         </div>
                         <div class="col-lg-1 col-sm-2 col-xs-12">
                             <div class="row">
                                 <div class="col-12 p-0">
                                     <div class="slider-right-nav">
-                                        <div><img src="/assets/images/pro3/1.jpg" alt=""
+                                        @foreach ($product["references"] as $references)
+                                            @foreach ($references["images"] as $image)
+                                            <div><img src="{{ $image["url"] }}" alt=""
                                                 class="img-fluid blur-up lazyload"></div>
-                                        <div><img src="/assets/images/pro3/2.jpg" alt=""
+                                                
+                                            @endforeach
+                                        @endforeach
+                                        
+                                        {{-- <div><img src="/assets/images/pro3/2.jpg" alt=""
                                                 class="img-fluid blur-up lazyload"></div>
                                         <div><img src="/assets/images/pro3/27.jpg" alt=""
                                                 class="img-fluid blur-up lazyload"></div>
                                         <div><img src="/assets/images/pro3/27.jpg" alt=""
-                                                class="img-fluid blur-up lazyload"></div>
+                                                class="img-fluid blur-up lazyload"></div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -261,8 +270,8 @@
                                     <li class="bg-light1"></li>
                                     <li class="bg-light2"></li>
                                 </ul> --}}
-                                {{-- <div class="product-description border-product">
-                                    <h6 class="product-title size-text">Seleccionar talla <span><a href="" data-toggle="modal"
+                                <div class="product-description border-product">
+                                    {{-- <h6 class="product-title size-text">Seleccionar talla <span><a href="" data-toggle="modal"
                                                 data-target="#sizemodal">size chart</a></span></h6>
                                     <div class="modal fade" id="sizemodal" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -285,7 +294,7 @@
                                             <li><a href="#">l</a></li>
                                             <li><a href="#">xl</a></li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                     <h6 class="product-title">Cantidad</h6>
                                     <div class="qty-box">
                                         <div class="input-group"><span class="input-group-prepend"><button @click="updateQuantity('remove')" type="button"
@@ -296,7 +305,7 @@
                                                     class="btn quantity-right-plus" data-type="plus" data-field=""><i
                                                         class="ti-angle-right"></i></button></span></div>
                                     </div>
-                                </div> --}}
+                                </div>
                                 <div class="product-buttons"><a href="#" data-toggle="modal" data-target="#addtocart"
                                         class="btn btn-solid">add to cart</a> <a href="#" class="btn btn-solid">buy now</a>
                                 </div>

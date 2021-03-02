@@ -55,6 +55,10 @@
 
 </head>
 <body>
+        
+    <!-- header start -->
+    @include('layouts.header')
+    <!-- header end -->
     @yield('content')
     
     <!-- footer start -->

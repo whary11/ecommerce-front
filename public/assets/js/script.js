@@ -269,7 +269,8 @@
             dots: true,
             nav: false,
             vertical: true,
-            infinite: false
+            infinite: false,
+            
         });
 
         function mouseWheel($slider) {
@@ -792,13 +793,14 @@
         ]
     });
 
-    $('.product-slick').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: true,
-        fade: true,
-        asNavFor: '.slider-nav'
-    });
+    // $('.product-slick').slick({
+    //     slidesToShow: 1,
+    //     slidesToScroll: 1,
+    //     arrows: true,
+    //     fade: true,
+    //     asNavFor: '.slider-nav',
+    // });
+
 
     $('.slider-nav').slick({
         vertical: false,

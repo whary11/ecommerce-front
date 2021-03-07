@@ -20,5 +20,6 @@ class ProductController extends Controller
             // return $product;
             return view('product.detail', compact('product', 'company'));
         }
+
     }
 }

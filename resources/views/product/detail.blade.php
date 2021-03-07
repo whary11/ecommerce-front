@@ -4,6 +4,12 @@
  {{ $company["name"] }} | {{$product["name"]}}
 @endsection
 
+<style>
+    .product-right .product-buttons a:last-child {
+    margin-left: 0px !important;
+    }
+</style>
+
     @section('content')
     
 
@@ -195,7 +201,7 @@
         <!-- loader end -->
 
         <!-- breadcrumb start -->
-        @include('layouts.breadcrumb')
+        {{-- @include('layouts.breadcrumb') --}}
         <!-- breadcrumb End -->
 
 
@@ -204,13 +210,12 @@
             <div class="collection-wrapper">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-5 col-sm-10 col-xs-12">
+                        <div class="col-lg-5 col-sm-11">
                             <div class="product-right-slick">
                                 @foreach ($product["references"] as $references)
                                     @foreach ($references["images"] as $image)
                                         <div><img src="{{ $image["url"] }}" alt=""
                                             class="img-fluid blur-up lazyload image_zoom_cls-0"></div>
-                                        
                                     @endforeach
                                 @endforeach
                                 
@@ -222,24 +227,19 @@
                                         class="img-fluid blur-up lazyload image_zoom_cls-0"></div> --}}
                             </div>
                         </div>
-                        <div class="col-lg-1 col-sm-2 col-xs-12">
+                        <div class="col-lg-1 col-sm-1">
                             <div class="row">
                                 <div class="col-12 p-0">
                                     <div class="slider-right-nav">
-                                        @foreach ($product["references"] as $references)
+                                        {{-- @foreach ($product["references"] as $references)
                                             @foreach ($references["images"] as $image)
                                             <div><img src="{{ $image["url"] }}" alt=""
                                                 class="img-fluid blur-up lazyload"></div>
                                                 
                                             @endforeach
-                                        @endforeach
+                                        @endforeach --}}
                                         
-                                        {{-- <div><img src="/assets/images/pro3/2.jpg" alt=""
-                                                class="img-fluid blur-up lazyload"></div>
-                                        <div><img src="/assets/images/pro3/27.jpg" alt=""
-                                                class="img-fluid blur-up lazyload"></div>
-                                        <div><img src="/assets/images/pro3/27.jpg" alt=""
-                                                class="img-fluid blur-up lazyload"></div> --}}
+                                
                                     </div>
                                 </div>
                             </div>
@@ -247,15 +247,15 @@
                         <div class="col-lg-6 rtl-text" id="product_detail_vue">
                             <div class="product-right">
                                 <h2>{{$product["name"]}}</h2>
-                                <h4><del>$459.00</del><span>55% off</span></h4>
-                                <h3 id="price">${{ $product["references"][0]["price"] }}</h3>
+                                <h4><del id="price_with_discount">$ {{ number_format(($product["references"][0]["price"]-$product["references"][0]["price"]/100*10)) }}</del><span id="percentage-discount">55% off</span></h4>
+                                <h3 id="price">$ {{ number_format($product["references"][0]["price"]) }}</h3>
                                 <ul class="color-variant">
                                     @foreach ($product["references"] as $key=> $refe)
                                         @if (isset($refe["color"]))
                                             <div class="reference_selected" id="div_reference_{{$refe["id"]}}">
-                                                <li @click.prevent="selectReference({{$refe["id"]}},{{$refe["stock"]}},{{$refe["price"]}})" class="bg-light0" id="reference_{{$refe["id"]}}" style="background:{{$refe["color"]}} !important"></li>
+                                                <li @click.prevent="selectReference({{$refe["id"]}},{{$refe["stock"]}},{{$refe["price"]}},{{($refe["price"]-$refe["price"]/100*10)}})" class="bg-light0" id="reference_{{$refe["id"]}}" style="background:{{$refe["color"]}} !important"></li>
                                                 @if ($key == 0)
-                                                    <hr data-id="{{$refe["id"]}}" data-price="{{$refe["price"]}}" data-stock="{{$refe["stock"]}}" class="hr_reference">
+                                                    <hr data-id="{{$refe["id"]}}" data-price="{{$refe["price"]}}" data-price_with_discount="{{($refe["price"]-$refe["price"]/100*10)}}" data-stock="{{$refe["stock"]}}" class="hr_reference">
                                                 @endif
                                             </div>
                                         {{-- Si es una referencia diferente a color --}}
@@ -297,23 +297,31 @@
                                     </div> --}}
                                     <h6 class="product-title">Cantidad</h6>
                                     <div class="qty-box">
-                                        <div class="input-group"><span class="input-group-prepend"><button @click="updateQuantity('remove')" type="button"
+                                        <div class="input-group"><span class="input-group-prepend"><button @click="updateQuantity('remove')" id="remove-quantity" type="button"
                                                     class="btn quantity-left-minus" data-type="minus" data-field=""><i
                                                         class="ti-angle-left"></i></button> </span>
                                             <input type="text" name="quantity" id="quantity" class="form-control input-number" @keyUp="updateQuantity('writing')" value="1">
-                                            <span class="input-group-prepend"><button @click="updateQuantity('add')" type="button"
+                                            <span class="input-group-prepend"><button id="add-quantity" @click="updateQuantity('add')" type="button"
                                                     class="btn quantity-right-plus" data-type="plus" data-field=""><i
                                                         class="ti-angle-right"></i></button></span></div>
-                                    </div>
+
+                                                        
+                                                    </div>
+                                                    <div class="d-none" id="no-stock">
+
+                                                        <span class="text-danger">No hay mas unidades disponibles</span>
+                                                    </div>
+
                                 </div>
                                 <div class="product-buttons"><a href="#" data-toggle="modal" data-target="#addtocart"
-                                        class="btn btn-solid">add to cart</a> <a href="#" class="btn btn-solid">buy now</a>
+                                        class="btn btn-solid">Agregar al carrito</a> 
+                                        {{-- <a href="#" class="btn btn-solid">buy now</a> --}}
                                 </div>
                                 <div class="border-product">
                                     <h6 class="product-title">Detalle</h6>
                                     <p>{{$product["description"]}}</p>
                                 </div>
-                                <div class="border-product">
+                                {{-- <div class="border-product">
                                     <h6 class="product-title">share it</h6>
                                     <div class="product-icon">
                                         <ul class="product-social">
@@ -340,7 +348,7 @@
                                                     class="timer-cal">Sec</span></span>
                                         </p>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

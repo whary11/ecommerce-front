@@ -186,8 +186,8 @@
                             </div>
                         </div>
                         <div class="brand-logo">
-                            <a href="index.html"> <img src="/assets/images/icon/logo.png"
-                                    class="img-fluid blur-up lazyload" alt=""></a>
+                            <a href="index.html"> <img src="https://keny-app.s3.ca-central-1.amazonaws.com/logo1.png"
+                                    class="img-fluid blur-up lazyload" alt="" width="25%"></a>
                         </div>
                     </div>
                     <div class="menu-right pull-right">

@@ -568,7 +568,9 @@
                                         <div><img src="/assets/images/icon/cart.png"
                                                 class="img-fluid blur-up lazyload" alt="">
                                             <i class="ti-shopping-cart"></i></div>
-                                        <ul class="show-div shopping-cart">
+
+                                            <x-cart></x-cart>
+                                        {{-- <ul class="show-div shopping-cart">
                                             <li>
                                                 <div class="media">
                                                     <a href="#"><img class="mr-3"
@@ -612,7 +614,7 @@
                                                     <a href="#" class="checkout">checkout</a>
                                                 </div>
                                             </li>
-                                        </ul>
+                                        </ul> --}}
                                     </li>
                                 </ul>
                             </div>

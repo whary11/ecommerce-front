@@ -1,18 +1,26 @@
+
+
 var detail = new Vue({
     el:"#product_detail_vue",
     data:{
-        reference:{}
+        reference:{},
     },
     mounted() {
-        this.pushReference($(".hr_reference").data('id'), $(".hr_reference").data('stock'), $(".hr_reference").data('price'), $(".hr_reference").data('price_with_discount'))
+        this.pushReference($("#info_reference").data('id'), $("#info_reference").data('stock'), $("#info_reference").data('price'), $("#info_reference").data('price_with_discount'), 1, $("#info_reference").data('name'), $("#info_reference").data('image'),)
 
         this.setPercentage(this.reference.price, this.reference.price_with_discount)
 
         this.validateStock(this.reference.stock)
 
+
+
+        let cart = new Cart()
+
+        cart.renderCartInMenu()
+
     },
     methods: {
-        selectReference(id,stock,price, price_with_discount){
+        selectReference(id,stock,price, price_with_discount,quantity, product_name, image){
             let jq_div_ref = $(`#div_reference_${id}`)
             let jq_div_price = $("#price")
             let jq_div_with_discount = $("#price_with_discount")
@@ -22,24 +30,19 @@ var detail = new Vue({
             // Cambiar el precio
             jq_div_price.text(`$ ${formatCurrency(price)}`)
             jq_div_with_discount.text(`$ ${formatCurrency(price_with_discount)}`)
-
-            this.pushReference(id,stock,price, price_with_discount)
-
+            this.pushReference(id,stock,price, price_with_discount, quantity, product_name, image)
             this.validateStock(stock)
-
-
             this.setPercentage(price, price_with_discount)
-
-            
-
-
         },
 
-        pushReference(id, stock, price, price_with_discount){
+        pushReference(id, stock, price, price_with_discount, quantity, product_name, image){
             this.reference.id = id
             this.reference.stock = stock
             this.reference.price = price
             this.reference.price_with_discount = price_with_discount
+            this.reference.quantity = quantity
+            this.reference.product_name = product_name
+            this.reference.image = image
         },
         updateQuantity(type){
             
@@ -54,17 +57,11 @@ var detail = new Vue({
                 }else{
                     input_quantity.val(this.reference.stock)
                 }
-
-
-
-                
-                // alert(`No hay suficiente stock, esta referencia tiene una disponibilidad de ${this.reference.stock}`)
             }else{
-                
-                
                 switch (type) {
                     case "add":
                         input_quantity.val(quantity+1)
+                        this.reference.quantity += 1
                         break;
                     case "remove":
                         input_quantity.val(quantity<1?1:quantity-1)
@@ -75,17 +72,9 @@ var detail = new Vue({
                     default:
                         break;
                 }
-                
-
-                
             }
-
             quantity = parseInt(input_quantity.val())
-            logCompany(quantity, type);
-
-
             this.showMesageNoStock(quantity)
-
         },
         validateStock(stock){
             let add_quantity = $("#add-quantity")
@@ -94,12 +83,12 @@ var detail = new Vue({
             let input_quantity = $("#quantity")
             add_quantity.attr("disabled", false)
             remove_quantity.attr("disabled", false)
-            input_quantity.attr("disabled", false)
+            // input_quantity.attr("disabled", false)
             input_quantity.val(1)
             if (stock < 1) {
                 add_quantity.attr("disabled", true)
                 remove_quantity.attr("disabled", true)
-                input_quantity.attr("disabled", true)
+                // input_quantity.attr("disabled", true)
                 input_quantity.val(0)
                 
             }
@@ -122,6 +111,27 @@ var detail = new Vue({
             let jq_div_percentage_discount = $("#percentage-discount")
             jq_div_percentage_discount.text( `${calculatePercentage(price, price_with_discount)} Off`)
             
+        },
+        addCart(){
+            $("#no-stock-in-add").text("")
+            let cart = new Cart()
+            let exist = cart.validateExistReference(this.reference.id)
+            logCompany(exist, this.reference.id)
+            if (exist.length >0) {
+                if (exist[0].quantity < this.reference.stock) {
+                    cart.addCart(this.reference)
+
+                    logCompany(this.reference)
+                }else{
+                    $("#no-stock-in-add").text("No hay mas cantidades disponibles")
+                    logCompany("")
+                }
+                return 
+            }else{
+                logCompany(this.reference)
+
+                cart.addCart(this.reference)
+            }
         }
 
     },

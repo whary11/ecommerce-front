@@ -4,7 +4,7 @@ namespace App\Http\Traits;
 use Illuminate\Support\Facades\Http;
 
 trait HttpRequestTrait{
-    public $base_url = "http://localhost:4001";
+    public $base_url = "http://localhost:4010/api";
     public function get($url){
         try {
             $resp = Http::get($this->base_url.$url);

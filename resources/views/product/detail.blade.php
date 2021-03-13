@@ -247,20 +247,26 @@
                         <div class="col-lg-6 rtl-text" id="product_detail_vue">
                             <div class="product-right">
                                 <h2>{{$product["name"]}}</h2>
-                                <h4><del id="price_with_discount">$ {{ number_format(($product["references"][0]["price"]-$product["references"][0]["price"]/100*10)) }}</del><span id="percentage-discount">55% off</span></h4>
+                                @if ($product["references"][0]["price"] != $product["references"][0]["price_with_discount"])
+                                    <h4><del id="price_with_discount">$ {{ number_format(($product["references"][0]["price_with_discount"])) }}</del><span id="percentage-discount">55% off</span></h4>
+                                @endif
                                 <h3 id="price">$ {{ number_format($product["references"][0]["price"]) }}</h3>
                                 <ul class="color-variant">
+
                                     @foreach ($product["references"] as $key=> $refe)
-                                        @if (isset($refe["color"]))
+                                    <span class="d-none" id="info_reference" data-id="{{$refe["id"]}}" data-price="{{$refe["price"]}}" data-price_with_discount="{{($refe["price_with_discount"])}}" data-stock="{{$refe["stock"]}}" data-name="{{$product["name"]}}" data-image="{{isset($refe["images"][0])?$refe["images"][0]["url"]:"-"}}" class="hr_reference"></span>
+                                        @if ($refe["view_front"] == 1)
+                                            @if (isset($refe["color"]))
                                             <div class="reference_selected" id="div_reference_{{$refe["id"]}}">
-                                                <li @click.prevent="selectReference({{$refe["id"]}},{{$refe["stock"]}},{{$refe["price"]}},{{($refe["price"]-$refe["price"]/100*10)}})" class="bg-light0" id="reference_{{$refe["id"]}}" style="background:{{$refe["color"]}} !important"></li>
+                                                <li @click.prevent="selectReference({{$refe["id"]}},{{$refe["stock"]}},{{$refe["price"]}},{{$refe["price_with_discount"]}}, 1, '{{$product["name"]}}', '{{ isset($refe["images"][0])?$refe["images"][0]["url"]:""}}')" class="bg-light0" id="reference_{{$refe["id"]}}" style="background:{{$refe["color"]}} !important"></li>
                                                 @if ($key == 0)
-                                                    <hr data-id="{{$refe["id"]}}" data-price="{{$refe["price"]}}" data-price_with_discount="{{($refe["price"]-$refe["price"]/100*10)}}" data-stock="{{$refe["stock"]}}" class="hr_reference">
+                                                <hr data-id="{{$refe["id"]}}" data-price="{{$refe["price"]}}" data-price_with_discount="{{$refe["price_with_discount"]}}" data-stock="{{$refe["stock"]}}" class="hr_reference">
                                                 @endif
                                             </div>
-                                        {{-- Si es una referencia diferente a color --}}
-                                        @else
+                                            {{-- Si es una referencia diferente a color --}}
+                                            @else
                                             {{ $refe["name"]}} rrr
+                                            @endif
                                         @endif
                                     @endforeach
                                 </ul>
@@ -300,7 +306,7 @@
                                         <div class="input-group"><span class="input-group-prepend"><button @click="updateQuantity('remove')" id="remove-quantity" type="button"
                                                     class="btn quantity-left-minus" data-type="minus" data-field=""><i
                                                         class="ti-angle-left"></i></button> </span>
-                                            <input type="text" name="quantity" id="quantity" class="form-control input-number" @keyUp="updateQuantity('writing')" value="1">
+                                            <input type="text" name="quantity" id="quantity" class="form-control input-number" @keyUp="updateQuantity('writing')" value="1" disabled>
                                             <span class="input-group-prepend"><button id="add-quantity" @click="updateQuantity('add')" type="button"
                                                     class="btn quantity-right-plus" data-type="plus" data-field=""><i
                                                         class="ti-angle-right"></i></button></span></div>
@@ -313,9 +319,13 @@
                                                     </div>
 
                                 </div>
-                                <div class="product-buttons"><a href="#" data-toggle="modal" data-target="#addtocart"
-                                        class="btn btn-solid">Agregar al carrito</a> 
-                                        {{-- <a href="#" class="btn btn-solid">buy now</a> --}}
+                                <div class="product-buttons">
+                                    {{-- <a href="#" data-toggle="modal" data-target="#addtocart"
+                                        class="btn btn-solid">Agregar al carrito</a>  --}}
+                                        <a href="#" class="btn btn-solid" @click.prevent="addCart()">Agregar al carrito</a>
+                                        <p>
+                                            <span class="text-danger" id="no-stock-in-add"></span>
+                                        </p>
                                 </div>
                                 <div class="border-product">
                                     <h6 class="product-title">Detalle</h6>
@@ -619,7 +629,7 @@
 
     
     @section('scripts')
-        <script src="/js/ProductDetail/product_detail.js"></script>
+        <script src="/js/Product/product_detail.js"></script>
     @endsection
      <!-- latest custon-->
 

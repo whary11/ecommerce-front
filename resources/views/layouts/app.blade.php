@@ -80,7 +80,15 @@
 
         
         window.formatCurrency = (value) => {
-           return new Intl.NumberFormat("es-CO").format(value)
+
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0
+            })
+
+
+           return formatter.format(value)
         }
 
         window.calculatePercentage = (price, price_with_discount) => {
@@ -866,6 +874,8 @@
            document.getElementById("search-overlay").style.display = "none";
        }
     </script>
+
+    <script src="/js/Class/Cart.js"></script>
     @yield('scripts')
 </body>
 

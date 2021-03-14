@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+ {{ $company["name"] }} | Checkout
+@endsection
+
 
 
 
@@ -20,78 +24,82 @@
                             <div class="row">
                                 <div class="col-lg-6 col-sm-12 col-xs-12">
                                     <div class="checkout-title">
-                                        <h3>Billing Details</h3>
+                                        <h3>Detalles de la facturación</h3>
                                     </div>
                                     <div class="row check-out">
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div class="field-label">*Nombres</div>
-                                            <input type="text" name="field-name" value="" placeholder="Nombres">
+                                            <input type="text" name="field-name" value="" placeholder="Nombres" required>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div class="field-label">*Apellidos</div>
-                                            <input type="text" name="field-name" value="" placeholder="Apellidos">
+                                            <input type="text" name="field-name" value="" placeholder="Apellidos" required>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div class="field-label">*Teléfono</div>
-                                            <input type="text" name="field-name" value="" placeholder="Teléfono">
+                                            <input type="text" name="field-name" value="" placeholder="Teléfono" required>
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div class="field-label">*Correo electrónico</div>
-                                            <input type="text" name="field-name" value="" placeholder="Correo electrónico">
+                                            <input type="email" name="field-name" value="" placeholder="Correo electrónico" required>
                                         </div>
                                         <div class="col-12">
                                             <h3 class="text-center">Dirección</h3>
                                         </div>
 
-                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                                <div class="field-label">*Via generadora</div>
-                                                <select>
-                                                    <option>Calle</option>
-                                                    <option>Carrera</option>
-                                                    <option>Diagonal</option>
-                                                    <option>Transversal</option>
-                                                </select>
-                                            </div>
+                                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                            <div class="field-label">*Ciudad</div>
+                                            <select required>
+                                                <option>Bogotá</option>
+                                                <option>Medellín</option>
+                                                <option>Cali</option>
+                                                <option>Barranqulla</option>
+                                            </select>
                                         </div>
 
-                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <div class="field-label">*Número</div>
-                                            <input type="text" name="field-name" value="" placeholder="Número">
-                                        </div>
-                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                                <div class="field-label">*Via secundaria</div>
-                                                <select>
-                                                    <option>Calle</option>
-                                                    <option>Carrera</option>
-                                                    <option>Diagonal</option>
-                                                    <option>Transversal</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                                            <div class="field-label">*Número</div>
-                                            <input type="text" name="field-name" value="" placeholder="Número">
+                                        <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                                            <div class="field-label">*Via generadora</div>
+                                            <select required>
+                                                <option>Calle</option>
+                                                <option>Carrera</option>
+                                                <option>Diagonal</option>
+                                                <option>Transversal</option>
+                                            </select>
                                         </div>
 
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-4">
+                                            {{-- <div class="field-label">*Número</div> --}}
+                                            <input type="text" name="field-name" value="" placeholder="Número" required>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-4">
+                                                {{-- <div class="field-label">*Via secundaria</div> --}}
+                                            <input type="text" name="field-name" value="" placeholder="Número" required>
+                                        </div>
+                                        <div class="form-group col-md-4 col-sm-4 col-xs-4">
+                                            {{-- <div class="field-label">*Número</div> --}}
+                                            <input type="text" name="field-name" value="" placeholder="Número" required>
+                                        </div>
 
-
-
-
-
-
-
-                                        
                                         <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <input type="checkbox" name="shipping-option" id="account-option"> &ensp;
-                                            <label for="account-option">Create An Account?</label>
+                                            <input type="text" name="complement" placeholder="Complemento: (barrio. interior, apartamento)">
                                         </div>
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="field-label">*Fecha de entrega</div>
+                                            <input type="date" name="shipping-option" id="account-option" min="{{$date_after_delivery ?? '' }}" class="form-control" required>
+                                            
+                                        </div>
+                                        <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <input type="checkbox" name="shipping-option" id="account-option" checked> &ensp;
+                                            <label for="account-option">Crea una cuenta ?</label>
+                                        </div>
+
+
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-12 col-xs-12">
-                                    <div class="checkout-details">
-                                        <div class="order-box">
+                                    <div class="checkout-details" >
+                                        <div class="order-box" id="checkout-details">
                                             <div class="title-box">
                                                 <div>Product <span>Total</span></div>
                                             </div>
@@ -119,40 +127,7 @@
                                             </ul>
                                         </div>
                                         <div class="payment-box">
-                                            <div class="upper-box">
-                                                <div class="payment-options">
-                                                    <ul>
-                                                        <li>
-                                                            <div class="radio-option">
-                                                                <input type="radio" name="payment-group" id="payment-1"
-                                                                    checked="checked">
-                                                                <label for="payment-1">Check Payments<span
-                                                                        class="small-text">Please send a check to Store
-                                                                        Name, Store Street, Store Town, Store State /
-                                                                        County, Store Postcode.</span></label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="radio-option">
-                                                                <input type="radio" name="payment-group" id="payment-2">
-                                                                <label for="payment-2">Cash On Delivery<span
-                                                                        class="small-text">Please send a check to Store
-                                                                        Name, Store Street, Store Town, Store State /
-                                                                        County, Store Postcode.</span></label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="radio-option paypal">
-                                                                <input type="radio" name="payment-group" id="payment-3">
-                                                                <label for="payment-3">PayPal<span class="image"><img
-                                                                            src="../assets/images/paypal.png"
-                                                                            alt=""></span></label>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="text-right"><a href="#" class="btn-solid btn">Place Order</a></div>
+                                            <div class="text-right"><button type="submit" class="btn-solid btn">Realizar Pedido</button></div>
                                         </div>
                                     </div>
                                 </div>

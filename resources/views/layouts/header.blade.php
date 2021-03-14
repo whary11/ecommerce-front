@@ -54,7 +54,7 @@
                                             <i class="fa fa-angle-left pr-2" aria-hidden="true"></i> Back
                                         </div>
                                     </div>
-                                    <!-- Vertical Menu -->
+                                    {{-- Vertical Menu --}}
                                     <ul id="sub-menu" class="sm pixelstrap sm-vertical ">
                                         <li><a href="#">clothing</a>
                                             <ul class="mega-menu clothing-menu">
@@ -196,7 +196,7 @@
                                 <div class="toggle-nav">
                                     <i class="fa fa-bars sidebar-bar"></i>
                                 </div>
-                                <!-- Horizontal menu -->
+                                {{-- Horizontal menu --}}
                                 <ul id="main-menu" class="sm pixelstrap sm-horizontal">
                                     <li>
                                         <div class="mobile-back text-right">Back<i class="fa fa-angle-right pl-2"

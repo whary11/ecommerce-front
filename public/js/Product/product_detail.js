@@ -7,17 +7,8 @@ var detail = new Vue({
     },
     mounted() {
         this.pushReference($("#info_reference").data('id'), $("#info_reference").data('stock'), $("#info_reference").data('price'), $("#info_reference").data('price_with_discount'), 1, $("#info_reference").data('name'), $("#info_reference").data('image'),)
-
         this.setPercentage(this.reference.price, this.reference.price_with_discount)
-
         this.validateStock(this.reference.stock)
-
-
-
-        let cart = new Cart()
-
-        cart.renderCartInMenu()
-
     },
     methods: {
         selectReference(id,stock,price, price_with_discount,quantity, product_name, image){
@@ -132,6 +123,8 @@ var detail = new Vue({
 
                 cart.addCart(this.reference)
             }
+
+            
         }
 
     },

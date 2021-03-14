@@ -9,11 +9,8 @@ class ProductController extends Controller
     public function detail($slug){
         $product = $this->getProductBySlug($slug);
         if ($product["status"]) {
-            $company = [
-                "name" => "Keny",
-                "address" => "Engativá",
-                "logo" => ""
-            ];
+            $company = $this->company;
+
             $product = $product["data"];
             // return $product;
             return view('product.detail', compact('product', 'company'));

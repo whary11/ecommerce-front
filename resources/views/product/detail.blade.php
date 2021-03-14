@@ -14,7 +14,7 @@
     
 
     
-        <!-- loader start -->
+        {{--  loader start  --}}
         <div class="loader_skeleton">
             <header>
                 <div class="top-header d-none d-sm-block">
@@ -198,14 +198,12 @@
                 </div>
             </section>
         </div>
-        <!-- loader end -->
+        {{--  loader end 
 
-        <!-- breadcrumb start -->
-        {{-- @include('layouts.breadcrumb') --}}
-        <!-- breadcrumb End -->
+        @include('layouts.breadcrumb') 
 
 
-        <!-- section start -->
+        section start --}}
         <section>
             <div class="collection-wrapper">
                 <div class="container">
@@ -303,13 +301,19 @@
                                     </div> --}}
                                     <h6 class="product-title">Cantidad</h6>
                                     <div class="qty-box">
-                                        <div class="input-group"><span class="input-group-prepend"><button @click="updateQuantity('remove')" id="remove-quantity" type="button"
+                                        <div class="input-group">
+                                            {{-- <span class="input-group-prepend">
+                                            
+                                            <button @click="updateQuantity('remove')" id="remove-quantity" type="button"
                                                     class="btn quantity-left-minus" data-type="minus" data-field=""><i
-                                                        class="ti-angle-left"></i></button> </span>
+                                                        class="ti-angle-left"></i></button> </span> --}}
                                             <input type="text" name="quantity" id="quantity" class="form-control input-number" @keyUp="updateQuantity('writing')" value="1" disabled>
-                                            <span class="input-group-prepend"><button id="add-quantity" @click="updateQuantity('add')" type="button"
+                                            {{-- <span class="input-group-prepend"><button id="add-quantity" @click="updateQuantity('add')" type="button"
                                                     class="btn quantity-right-plus" data-type="plus" data-field=""><i
-                                                        class="ti-angle-right"></i></button></span></div>
+                                                        class="ti-angle-right"></i></button></span> --}}
+                                                    
+                                                    
+                                                    </div>
 
                                                         
                                                     </div>
@@ -320,9 +324,12 @@
 
                                 </div>
                                 <div class="product-buttons">
-                                    {{-- <a href="#" data-toggle="modal" data-target="#addtocart"
-                                        class="btn btn-solid">Agregar al carrito</a>  --}}
+
+                                    @if ($product["number_activities"] > 1)
+                                        <a href="#" data-toggle="modal" data-target="#addtocart" class="btn btn-solid">Arma tu libro</a> 
+                                    @else
                                         <a href="#" class="btn btn-solid" @click.prevent="addCart()">Agregar al carrito</a>
+                                    @endif
                                         <p>
                                             <span class="text-danger" id="no-stock-in-add"></span>
                                         </p>
@@ -365,10 +372,10 @@
                 </div>
             </div>
         </section>
-        <!-- Section ends -->
+        {{--  Section ends  --}}
 
 
-        <!-- product-tab starts -->
+        {{--  product-tab starts  --}}
         <section class="tab-product m-0">
             <div class="container">
                 <div class="row">
@@ -484,10 +491,10 @@
                 </div>
             </div>
         </section>
-        <!-- product-tab ends -->
+        {{--  product-tab ends  --}}
 
 
-        <!-- product section start -->
+        {{--  product section start  --}}
         <section class="section-b-space ratio_asos">
             <div class="container">
                 <div class="row">
@@ -505,10 +512,10 @@
                 </div>
             </div>
         </section>
-        <!-- product section end -->
+        {{--  product section end  --}}
 
 
-        <!-- Add to cart modal popup start-->
+        {{--  Add to cart modal popup start --}}
         <div class="modal fade bd-example-modal-lg theme-modal cart-modal" id="addtocart" tabindex="-1" role="dialog"
             aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -521,96 +528,16 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
-                                        <div class="media">
-                                            <a href="#">
-                                                <img class="img-fluid blur-up lazyload pro-img"
-                                                    src="/assets/images/fashion/product/43.jpg" alt="">
-                                            </a>
-                                            <div class="media-body align-self-center text-center">
-                                                <a href="#">
-                                                    <h6>
-                                                        <i class="fa fa-check"></i>Item
-                                                        <span>men full sleeves</span>
-                                                        <span> successfully added to your Cart</span>
-                                                    </h6>
-                                                </a>
-                                                <div class="buttons">
-                                                    <a href="#" class="view-cart btn btn-solid">Your cart</a>
-                                                    <a href="#" class="checkout btn btn-solid">Check out</a>
-                                                    <a href="#" class="continue btn btn-solid">Continue shopping</a>
-                                                </div>
-
-                                                <div class="upsell_payment">
-                                                    <img src="/assets/images/payment_cart.png"
-                                                        class="img-fluid blur-up lazyload" alt="">
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="product-section">
                                             <div class="col-12 product-upsell text-center">
-                                                <h4>Customers who bought this item also.</h4>
+                                                <h3>Selecciona las {{$product["number_activities"]}} actividades para tu libro.</h3>
+                                                <span class="text-info">Pero si deseas puedes seleccionar mas de las {{$product["number_activities"]}}, con coste adicional.</span>
                                             </div>
                                             <div class="row" id="upsell_product">
-                                                <div class="product-box col-sm-3 col-6">
-                                                    <div class="img-wrapper">
-                                                        <div class="front">
-                                                            <a href="#">
-                                                                <img src="/assets/images/fashion/product/1.jpg"
-                                                                    class="img-fluid blur-up lazyload mb-1"
-                                                                    alt="cotton top">
-                                                            </a>
-                                                        </div>
-                                                        <div class="product-detail">
-                                                            <h6><a href="#"><span>cotton top</span></a></h6>
-                                                            <h4><span>$25</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-box col-sm-3 col-6">
-                                                    <div class="img-wrapper">
-                                                        <div class="front">
-                                                            <a href="#">
-                                                                <img src="/assets/images/fashion/product/34.jpg"
-                                                                    class="img-fluid blur-up lazyload mb-1"
-                                                                    alt="cotton top">
-                                                            </a>
-                                                        </div>
-                                                        <div class="product-detail">
-                                                            <h6><a href="#"><span>cotton top</span></a></h6>
-                                                            <h4><span>$25</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-box col-sm-3 col-6">
-                                                    <div class="img-wrapper">
-                                                        <div class="front">
-                                                            <a href="#">
-                                                                <img src="/assets/images/fashion/product/13.jpg"
-                                                                    class="img-fluid blur-up lazyload mb-1"
-                                                                    alt="cotton top">
-                                                            </a>
-                                                        </div>
-                                                        <div class="product-detail">
-                                                            <h6><a href="#"><span>cotton top</span></a></h6>
-                                                            <h4><span>$25</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="product-box col-sm-3 col-6">
-                                                    <div class="img-wrapper">
-                                                        <div class="front">
-                                                            <a href="#">
-                                                                <img src="/assets/images/fashion/product/19.jpg"
-                                                                    class="img-fluid blur-up lazyload mb-1"
-                                                                    alt="cotton top">
-                                                            </a>
-                                                        </div>
-                                                        <div class="product-detail">
-                                                            <h6><a href="#"><span>cotton top</span></a></h6>
-                                                            <h4><span>$25</span></h4>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @foreach ([1,2,3,4,5,6,7,8,9,1,2,3,44,4,4,44,4,4,4,4,4,4,4, 4] as $item)
+                                                    <x-activities-complete product-name="todsso el libro"/>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -621,7 +548,7 @@
                 </div>
             </div>
         </div>
-        <!-- Add to cart modal popup end-->
+        {{--  Add to cart modal popup end --}}
 
         
 
@@ -631,7 +558,7 @@
     @section('scripts')
         <script src="/js/Product/product_detail.js"></script>
     @endsection
-     <!-- latest custon-->
+     {{--  latest custon --}}
 
 
 </html>

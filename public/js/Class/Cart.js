@@ -44,6 +44,8 @@ class Cart {
             }
         }
 
+        this.renderCartInMenu()
+
     }
 
     validateStock(){
@@ -68,9 +70,6 @@ class Cart {
     validateExistReference(id){
         return this.cart.references.filter(item =>item.id == id)
     }
-
-
-
     renderCartInMenu(){
         let bodyCart = $("#shopping-cart")
         let html = ``
@@ -79,12 +78,12 @@ class Cart {
             html += `
                 <li>
                     <div class="media" id="media">
-                        <a href="#"><img class="mr-3"
+                        <a href="#"><img class="mr-3 rounded"
                                 src="${ref.image}"
-                                alt="Generic placeholder image"></a>
-                        <div class="media-body">
+                                alt="${ref.product_name}"></a>
+                        <div class="media-body" height="500%" width="50%">
                             <a href="#">
-                                <h4>${ref.product_name}</h4>
+                                <h4>${shorText(ref.product_name)}</h4>
                             </a>
                             <h4><span>${ref.quantity} x $ ${formatCurrency(ref.price_with_discount)}</span></h4>
                         </div>
@@ -100,13 +99,13 @@ class Cart {
         html += `
             <li>
                 <div class="total">
-                    <h5>Total : $ <span>${formatCurrency(this.getTotaCart())}</span></h5>
+                    <h5>Total : $ <span>${formatCurrency(this.getTotalCart())}</span></h5>
                 </div>
             </li>
             <li>
                 <div class="buttons">
-                    <a href="cart.html" class="view-cart">view cart</a>
-                    <a href="#" class="checkout">checkout</a>
+                    
+                    <a href="/purchase/checkout" class="checkout">checkout</a>
                 </div>
             </li>`
 
@@ -114,11 +113,42 @@ class Cart {
 
     }
 
+    renderCheckout(){
+        let checkoutDetails = $("#checkout-details")
+
+        let html = `
+            <div class="title-box">
+                <div>Productos <span>Total</span></div>
+            </div>
+            <ul class="qty">
+        `
+
+        this.cart.references.map(ref =>{
+            html += `
+                <li>${shorText(ref.product_name)} × ${ref.quantity} Unid <span>${formatCurrency(ref.price_with_discount)}</span></li>
+            `
+        })
+                                            
+        html += `
+            </ul>
+            <ul class="sub-total">
+                <li>Subtotal <span class="count">${formatCurrency(this.getTotalCart())}</span></li>
+                
+            </ul>
+            <ul class="total">
+                <li>Total <span class="count">${formatCurrency(this.getTotalCart())}</span></li>
+            </ul>
+        `
+
+
+        checkoutDetails.html(html)
+    }
+
     
 
     removeCart(){}
 
-    getTotaCart(){
+    getTotalCart(){
         let total = 0
         this.cart.references.map((ref)=>{
             total += ref.price_with_discount*ref.quantity

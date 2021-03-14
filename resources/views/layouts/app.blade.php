@@ -41,26 +41,26 @@
     
     </title>
 
-    <!--Google font-->
+    {{-- Google font --}}
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
-    <!-- Icons -->
+    {{--  Icons  --}}
     <link rel="stylesheet" type="text/css" href="/assets/css/fontawesome.css">
 
-    <!--Slick slider css-->
+    {{-- Slick slider css --}}
     <link rel="stylesheet" type="text/css" href="/assets/css/slick.css">
     <link rel="stylesheet" type="text/css" href="/assets/css/slick-theme.css">
 
-    <!-- Animate icon -->
+    {{--  Animate icon  --}}
     <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
 
-    <!-- Themify icon -->
+    {{--  Themify icon  --}}
     <link rel="stylesheet" type="text/css" href="/assets/css/themify-icons.css">
 
-    <!-- Bootstrap css -->
+    {{--  Bootstrap css  --}}
     <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css">
 
-    <!-- Theme css -->
+    {{--  Theme css  --}}
     <link rel="stylesheet" type="text/css" href="/assets/css/color1.css" media="screen" id="color">
 
     <style>
@@ -95,22 +95,31 @@
             logCompany(price, price_with_discount)
             return 100 - (price_with_discount/price)*100
         }
+
+        window.shorText = (text, stringLength = 20) => {
+
+            if (text.length >= stringLength) {
+                return text.substr(0, stringLength-3)+"..."
+            }
+
+            return text
+        }
     </script>
 
 </head>
 <body>
         
-    <!-- header start -->
+    {{--  header start  --}}
     @include('layouts.header')
-    <!-- header end -->
+    {{--  header end  --}}
     @yield('content')
     
-    <!-- footer start -->
+    {{--  footer start  --}}
     @include('layouts.footer')
-    <!-- footer end -->
+    {{--  footer end  --}}
     
     
-    <!-- theme setting -->
+    {{--  theme setting  --}}
     <a href="javascript:void(0)" onclick="openSetting()">
        <div class="setting-sidebar" id="setting-icon">
            <div>
@@ -819,52 +828,52 @@
            </div>
        </div>
     </div>
-    <!-- theme setting -->
+    {{--  theme setting  --}}
     
     
-    <!-- Add to cart modal popup start-->
+    {{--  Add to cart modal popup start --}}
    
-    <!-- Add to cart modal popup end-->
+    {{--  Add to cart modal popup end --}}
     
     
-    <!-- tap to top start -->
+    {{--  tap to top start  --}}
     <div class="tap-top">
        <div><i class="fa fa-angle-double-up"></i></div>
     </div>
-    <!-- tap to top end -->
+    {{--  tap to top end  --}}
     
-    <!-- latest jquery-->
+    {{--  latest jquery --}}
     <script src="/js/vue.js"></script>
     
     
-    <!-- latest jquery-->
+    {{--  latest jquery --}}
     <script src="/assets/js/jquery-3.3.1.min.js"></script>
     
-    <!-- menu js-->
+    {{--  menu js --}}
     <script src="/assets/js/menu.js"></script>
     
-    <!-- lazyload js-->
+    {{--  lazyload js --}}
     <script src="/assets/js/lazysizes.min.js"></script>
     
-    <!-- popper js-->
+    {{--  popper js --}}
     <script src="/assets/js/popper.min.js"></script>
     
-    <!-- slick js-->
+    {{--  slick js --}}
     <script src="/assets/js/slick.js"></script>
     
-    <!-- Bootstrap js-->
+    {{--  Bootstrap js --}}
     <script src="/assets/js/bootstrap.js"></script>
     
-    <!-- Bootstrap Notification js-->
+    {{--  Bootstrap Notification js --}}
     <script src="/assets/js/bootstrap-notify.min.js"></script>
     
-    <!-- Zoom js-->
+    {{--  Zoom js --}}
     <script src="/assets/js/jquery.elevatezoom.js"></script>
     
-    <!-- Theme js-->
+    {{--  Theme js --}}
     <script src="/assets/js/script.js"></script>
     
-    <!-- latest custon-->
+    {{--  latest custon --}}
     <script>
        function openSearch() {
            document.getElementById("search-overlay").style.display = "block";
@@ -876,6 +885,11 @@
     </script>
 
     <script src="/js/Class/Cart.js"></script>
+
+    <script>
+        let cartGeneral = new Cart()
+        cartGeneral.renderCartInMenu()
+    </script>
     @yield('scripts')
 </body>
 

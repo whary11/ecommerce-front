@@ -1,6 +1,9 @@
 var detail = new Vue({
     el:"#checkout",
     data:{},
-    mounted() {},
+    mounted() {
+        let cart = new Cart();
+        cart.renderCheckout()
+    },
     methods: {},
 })

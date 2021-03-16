@@ -528,15 +528,14 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
-                                        
                                         <div class="product-section">
                                             <div class="col-12 product-upsell text-center">
                                                 <h3>Selecciona las {{$product["number_activities"]}} actividades para tu libro.</h3>
                                                 <span class="text-info">Pero si deseas puedes seleccionar mas de las {{$product["number_activities"]}}, con coste adicional.</span>
                                             </div>
                                             <div class="row" id="upsell_product">
-                                                @foreach ([1,2,3,4,5,6,7,8,9,1,2,3,44,4,4,44,4,4,4,4,4,4,4, 4] as $item)
-                                                    <x-activities-complete product-name="todsso el libro"/>
+                                                @foreach ([1,2,3,4,5,6,7,8] as $item)
+                                                    <x-activities-complete product-name="Mi página - {{$item}}"/>
                                                 @endforeach
                                             </div>
                                         </div>

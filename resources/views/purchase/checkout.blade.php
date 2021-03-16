@@ -20,7 +20,7 @@
             <div class="container">
                 <div class="checkout-page">
                     <div class="checkout-form">
-                        <form>
+                        <form id="info-checkout" @submit.prevent="sendOrder">
                             <div class="row">
                                 <div class="col-lg-6 col-sm-12 col-xs-12">
                                     <div class="checkout-title">
@@ -29,19 +29,19 @@
                                     <div class="row check-out">
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div class="field-label">*Nombres</div>
-                                            <input type="text" name="field-name" value="" placeholder="Nombres" required>
+                                            <input type="text" name="name"  placeholder="Nombres" required value="Luis">
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div class="field-label">*Apellidos</div>
-                                            <input type="text" name="field-name" value="" placeholder="Apellidos" required>
+                                            <input type="text" name="surname" placeholder="Apellidos" required value="Raga">
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div class="field-label">*Teléfono</div>
-                                            <input type="text" name="field-name" value="" placeholder="Teléfono" required>
+                                            <input type="text" name="phone"  placeholder="Teléfono" required value="3043788629">
                                         </div>
                                         <div class="form-group col-md-6 col-sm-6 col-xs-12">
                                             <div class="field-label">*Correo electrónico</div>
-                                            <input type="email" name="field-name" value="" placeholder="Correo electrónico" required>
+                                            <input type="email" name="email" placeholder="Correo electrónico" required value="whary11@gmail.com">
                                         </div>
                                         <div class="col-12">
                                             <h3 class="text-center">Dirección</h3>
@@ -49,19 +49,19 @@
 
                                         <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                             <div class="field-label">*Ciudad</div>
-                                            <select required>
-                                                <option>Bogotá</option>
+                                            <select required name="city">
+                                                <option selected>Bogotá</option>
                                                 <option>Medellín</option>
                                                 <option>Cali</option>
-                                                <option>Barranqulla</option>
+                                                <option>Barranquilla</option>
                                             </select>
                                         </div>
 
                                         <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                            <div class="field-label">*Via generadora</div>
-                                            <select required>
+                                            {{-- <div class="field-label">*Via generadora</div> --}}
+                                            <select required name="via">
                                                 <option>Calle</option>
-                                                <option>Carrera</option>
+                                                <option selected>Carrera</option>
                                                 <option>Diagonal</option>
                                                 <option>Transversal</option>
                                             </select>
@@ -69,15 +69,15 @@
 
                                         <div class="form-group col-md-4 col-sm-4 col-xs-4">
                                             {{-- <div class="field-label">*Número</div> --}}
-                                            <input type="text" name="field-name" value="" placeholder="Número" required>
+                                            <input type="text" name="number1"  placeholder="Número" required value="105a">
                                         </div>
                                         <div class="form-group col-md-4 col-sm-4 col-xs-4">
                                                 {{-- <div class="field-label">*Via secundaria</div> --}}
-                                            <input type="text" name="field-name" value="" placeholder="Número" required>
+                                            <input type="text" name="number2"  placeholder="Número" required value="70b">
                                         </div>
                                         <div class="form-group col-md-4 col-sm-4 col-xs-4">
                                             {{-- <div class="field-label">*Número</div> --}}
-                                            <input type="text" name="field-name" value="" placeholder="Número" required>
+                                            <input type="text" name="number3" placeholder="Número" required value="07">
                                         </div>
 
                                         <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -85,11 +85,10 @@
                                         </div>
                                         <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="field-label">*Fecha de entrega</div>
-                                            <input type="date" name="shipping-option" id="account-option" min="{{$date_after_delivery ?? '' }}" class="form-control" required>
-                                            
+                                            <input type="date" name="delivery-date" id="delivery-date" min="{{$date_after_delivery ?? '' }}" class="form-control">
                                         </div>
                                         <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <input type="checkbox" name="shipping-option" id="account-option" checked> &ensp;
+                                            <input type="checkbox" name="create_account" id="account-option" checked> &ensp;
                                             <label for="account-option">Crea una cuenta ?</label>
                                         </div>
 
@@ -145,15 +144,7 @@
     <!-- footer start -->
     
     <!-- footer end -->
-
     @section('scripts')
         <script src="/js/Purchase/checkout.js"></script>
     @endsection
-    
-
-    
-
-
-
-
 </html>

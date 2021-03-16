@@ -75,7 +75,7 @@
     </style>
     <script>
         window.logCompany = (...vars)=>{
-            console.log(vars)
+            console.log(...vars)
         }
 
         

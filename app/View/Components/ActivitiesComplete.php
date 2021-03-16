@@ -14,7 +14,7 @@ class ActivitiesComplete extends Component
     public $productName;
     public function __construct($productName)
     {
-        $this->productNaame = $productName;
+        $this->productName = $productName;
     }
 
     /**

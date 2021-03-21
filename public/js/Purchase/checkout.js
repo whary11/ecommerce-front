@@ -48,6 +48,7 @@ var detail = new Vue({
             let data = {
                 references,
                 // ...info,
+                platform: "WEB",
                 // address,
                 address_id:1,
                 phone_id:1,
@@ -69,9 +70,9 @@ var detail = new Vue({
                       }).then((result) => {
                         logCompany(result)
                         if (result.isConfirmed) {
-                            window.location="/";
+                            // window.location="/";
                         } else {
-                            window.location="/";
+                            // window.location="/";
                         }
                       })
                 }

@@ -146,5 +146,6 @@
     <!-- footer end -->
     @section('scripts')
         <script src="/js/Purchase/checkout.js"></script>
+
     @endsection
 </html>

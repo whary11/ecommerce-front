@@ -83,7 +83,7 @@ class Cart {
                                 alt="${ref.product_name}"></a>
                         <div class="media-body" height="500%" width="50%">
                             <a href="#">
-                                <h4>${shorText(ref.product_name)}</h4>
+                                <h4>${shortText(ref.product_name)}</h4>
                             </a>
                             <h4><span>${ref.quantity} x $ ${formatCurrency(ref.price_with_discount)}</span></h4>
                         </div>
@@ -125,7 +125,7 @@ class Cart {
 
         this.cart.references.map(ref =>{
             html += `
-                <li>${shorText(ref.product_name)} × ${ref.quantity} Unid <span>${formatCurrency(ref.price_with_discount)}</span></li>
+                <li>${shortText(ref.product_name)} × ${ref.quantity} Unid <span>${formatCurrency(ref.price_with_discount)}</span></li>
             `
         })
                                             
@@ -144,6 +144,92 @@ class Cart {
         checkoutDetails.html(html)
     }
 
+    addActivity(owner_ref, reference){
+        let resp = this.getCart()
+        let existReference = this.validateExistReference(owner_ref.id)
+        logCompany(existReference)
+
+        if (!resp) { /// El carrito no existe
+            logCompany("El carrito no existe")
+            if (existReference && existReference.length == 0 ) {
+                logCompany("La referencia no exite en el carrito")
+                reference.quantity = 1
+                owner_ref.activities = []
+                owner_ref.activities.push(reference)
+                this.cart.references.push(owner_ref)
+                this.saveCart()
+
+                return true
+            }
+        }else{// El carrito existe
+            logCompany("El carrito existe")
+            if(existReference.length == 0){// La referencia no exite en el carrito
+                logCompany("La referencia no exite en el carrito", existReference)
+                reference.quantity = 1
+                owner_ref.activities = []
+                owner_ref.activities.push(reference)
+                this.cart.references.push(owner_ref)
+                this.saveCart()
+                return true
+            }else{
+                logCompany("La referencia exite en el carrito")
+
+                let newReferences = this.cart.references.filter(item => item.id != owner_ref.id)
+
+                // existReference[0].quantity += reference.quantity
+                // existReference[0].activities &&  existReference[0].activities.length > 0
+
+                if (existReference[0].activities) {
+                    let refe = existReference[0].activities.filter(item => item.id == reference.id)
+                    if (refe.length > 0) {
+
+                        // logCompany(refe[0])
+
+                        logCompany("La actividad existe.")
+
+
+                        if(refe[0].quantity < refe[0].stock){
+                            logCompany("La actividad tiene stock disponible.")
+                            let refes = existReference[0].activities.filter(item => item.id != reference.id)
+                            refe[0].quantity = refe[0].quantity+1
+                            refes.push(refe[0])
+                            existReference[0].activities = refes
+                            newReferences.push(existReference[0])
+
+                            this.cart.references = newReferences
+                            this.saveCart()
+                            return true
+                        }else{
+                            logCompany("No hay stock disponible.")
+
+                        }
+                    }else{
+                        logCompany("La actividad no existe.")
+                        reference.quantity = 1
+                        existReference[0].activities.push(reference)
+                        newReferences.push(existReference[0])
+
+                        this.cart.references = newReferences
+                        this.saveCart()
+                        return true
+                    }
+                }
+                
+
+                
+                // logCompany(newReferences)
+            }
+        }
+
+
+
+        this.renderCartInMenu()
+
+        return false
+
+
+    }
+
     
 
     removeCart(){}
@@ -156,4 +242,6 @@ class Cart {
 
         return total
     }
+
+    
 }

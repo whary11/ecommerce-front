@@ -367,6 +367,74 @@
                                     </div>
                                 </div> --}}
                             </div>
+
+
+                            {{--  Add to cart modal popup start --}}
+                            <div class="modal fade bd-example-modal-lg theme-modal cart-modal" id="addtocart" tabindex="-1" role="dialog"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body modal1">
+                                            <div class="container-fluid p-0">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="modal-bg addtocart">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            <div class="product-section">
+                                                                <div class="col-12 product-upsell text-center">
+                                                                    <h3>Selecciona las {{$product["number_activities"]}} actividades para tu libro.</h3>
+                                                                    <span class="text-info">Pero si deseas puedes seleccionar mas de las {{$product["number_activities"]}}, con coste adicional.</span>
+                                                                </div>
+                                                                <div class="row" id="upsell_product">
+
+                                                                    <template v-for="(item, key) in activities">
+                                                                        <div class="product-box col-sm-3 col-6 my-3" v-if="item.images.length > 0">
+                                                                            <div class="img-wrapper">
+                                                                                <div class="front">
+                                                                                    <a href="#">
+                                                                                        <img :src="item.images[0].url" class="img-fluid blur-up lazyload mb-1" alt="cotton top" width="200px" style="height:100px !important">
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div class="product-detail">
+                                                                                    <h6 style="font-size:10px"><a href="#"><span>@{{shortText(item.name)}} - @{{item.price_with_discount}}</span></a></h6>
+                                                                                    <div>
+                                                                                        <button class="btn btn-sm btn-info" @click.prevet="addActivity(item)">Agregar</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </template>
+
+
+                                                                    {{-- @foreach ($activities as $item)
+                                                                        <x-activities-complete product-name="{{$item["name"]}}"/>
+                                                                        @endforeach --}}
+                                                                    </div>
+                                                                    <nav aria-label="Page navigation example">
+                                                                        <ul class="pagination justify-content-center">
+                                                                          <li class="page-item disabled">
+                                                                            <a class="page-link" href="#" tabindex="-1"><</a>
+                                                                          </li>
+                                                                          <li class="page-item active" @click.prevent="getProductsType(this, 1)"><a class="page-link" href="#">1</a></li>
+                                                                          <li class="page-item" @click.prevent="getProductsType(this, 2)"><a class="page-link" href="#">2</a></li>
+                                                                          <li class="page-item" @click.prevent="getProductsType(this, 3)"><a class="page-link" href="#">3</a></li>
+                                                                          <li class="page-item" >
+                                                                            <a class="page-link" href="#">></a>
+                                                                          </li>
+                                                                        </ul>
+                                                                    </nav>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{--  Add to cart modal popup end --}}
                         </div>
                     </div>
                 </div>
@@ -515,39 +583,7 @@
         {{--  product section end  --}}
 
 
-        {{--  Add to cart modal popup start --}}
-        <div class="modal fade bd-example-modal-lg theme-modal cart-modal" id="addtocart" tabindex="-1" role="dialog"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body modal1">
-                        <div class="container-fluid p-0">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="modal-bg addtocart">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <div class="product-section">
-                                            <div class="col-12 product-upsell text-center">
-                                                <h3>Selecciona las {{$product["number_activities"]}} actividades para tu libro.</h3>
-                                                <span class="text-info">Pero si deseas puedes seleccionar mas de las {{$product["number_activities"]}}, con coste adicional.</span>
-                                            </div>
-                                            <div class="row" id="upsell_product">
-                                                @foreach ([1,2,3,4,5,6,7,8] as $item)
-                                                    <x-activities-complete product-name="Mi página - {{$item}}"/>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{--  Add to cart modal popup end --}}
+        
 
         
 

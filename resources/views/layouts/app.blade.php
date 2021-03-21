@@ -41,6 +41,9 @@
     
     </title>
 
+    <script src="/js/app.js"></script>
+
+
     {{-- Google font --}}
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
 
@@ -74,36 +77,7 @@
         }
     </style>
     <script>
-        window.logCompany = (...vars)=>{
-            console.log(...vars)
-        }
-
         
-        window.formatCurrency = (value) => {
-
-            const formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 0
-            })
-
-
-           return formatter.format(value)
-        }
-
-        window.calculatePercentage = (price, price_with_discount) => {
-            logCompany(price, price_with_discount)
-            return 100 - (price_with_discount/price)*100
-        }
-
-        window.shorText = (text, stringLength = 20) => {
-
-            if (text.length >= stringLength) {
-                return text.substr(0, stringLength-3)+"..."
-            }
-
-            return text
-        }
     </script>
 
 </head>
@@ -872,6 +846,9 @@
     
     {{--  Theme js --}}
     <script src="/assets/js/script.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     
     {{--  latest custon --}}
     <script>

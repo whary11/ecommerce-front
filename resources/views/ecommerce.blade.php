@@ -969,14 +969,16 @@
         <div class="slide-1 home-slider">
             <div>
                 <div class="home text-center">
-                    <img src="../assets/images/home-banner/30.jpg" alt="" class="bg-img">
+                    
+                    <img src="../assets/images/web1920.png" alt="" class="bg-img">
+                    {{-- <img src="../assets/images/home-banner/30.jpg" alt="" class="bg-img"> --}}
                     <div class="container">
                         <div class="row">
                             <div class="col">
                                 <div class="slider-contain">
                                     <div>
-                                        <h4>save upto 20%</h4>
-                                        <h1>creative & decor</h1><a href="#" class="btn btn-solid">shop now</a>
+                                        {{-- <h4>save upto 20%</h4>
+                                        <h1>creative & decor</h1><a href="#" class="btn btn-solid">shop now</a> --}}
                                     </div>
                                 </div>
                             </div>

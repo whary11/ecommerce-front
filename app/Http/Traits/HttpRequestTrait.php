@@ -8,7 +8,6 @@ trait HttpRequestTrait{
     public function get($url){
         try {
             $resp = Http::get($this->base_url.$url);
-            // dd($resp);
             return $resp;
         } catch (\Throwable $th) {
             return [

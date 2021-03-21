@@ -21,13 +21,22 @@ var detail = new Vue({
 
         getDataOrder(){
             let info = this.getInfoCheckout()
-            let details = []
+            let references = []
             this.cart.cart.references.map(item =>{
-                details.push({
+                let activities = []
+                
+                if (item.activities) {
+                    item.activities.map(act => {
+                        logCompany({id: act.id,quantity:act.quantity,price_with_discount:act.price_with_discount})
+                        activities.push({id: act.id,quantity:act.quantity,price_with_discount:act.price_with_discount})
+                        
+                    })
+                }
+                references.push({
                     id: item.id,
                     quantity:item.quantity,
                     price_with_discount:item.price_with_discount,
-                    activities:item.activities?item.activities:[]
+                    activities
                 })
             })
             let address = this.formDirection(info)
@@ -37,9 +46,12 @@ var detail = new Vue({
             delete info.number3
             delete info.via
             let data = {
-                details,
-                ...info,
-                address,
+                references,
+                // ...info,
+                // address,
+                address_id:1,
+                phone_id:1,
+                city_id:1,
                 total: this.cart.getTotalCart()
             }
             return data
@@ -48,10 +60,25 @@ var detail = new Vue({
             return `${data.via} ${data.number1} ${data.number2} ${data.number3}, ${data.city}`
         },
         sendOrder(){
-            logCompany(this.getDataOrder())
-
-
-            alert(JSON.stringify(this.getDataOrder()))
+            axios.post("/api/purchase/create", this.getDataOrder()).then(resp => {
+                if (resp.data.code == 200) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Genial !',
+                        html: `Nuestro equipo ya tiene su pedido, conserva este número <b>${resp.data.id}</b>`,
+                      }).then((result) => {
+                        logCompany(result)
+                        if (result.isConfirmed) {
+                            window.location="/";
+                        } else {
+                            window.location="/";
+                        }
+                      })
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            });
         }
     },
 })

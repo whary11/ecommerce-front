@@ -4,6 +4,8 @@
  {{ $company["name"] }} | {{$product["name"]}}
 @endsection
 
+<link rel="stylesheet" href="/css/loading.css">
+
 <style>
     .product-right .product-buttons a:last-child {
     margin-left: 0px !important;
@@ -389,7 +391,7 @@
                                                                 </div>
                                                                 <div class="row" id="upsell_product">
 
-                                                                    <template v-for="(item, key) in activities">
+                                                                    <template v-for="(item, key) in type.references">
                                                                         <div class="product-box col-sm-3 col-6 my-3" v-if="item.images.length > 0">
                                                                             <div class="img-wrapper">
                                                                                 <div class="front">
@@ -406,25 +408,21 @@
                                                                             </div>
                                                                         </div>
                                                                     </template>
-
-
-                                                                    {{-- @foreach ($activities as $item)
-                                                                        <x-activities-complete product-name="{{$item["name"]}}"/>
-                                                                        @endforeach --}}
-                                                                    </div>
-                                                                    <nav aria-label="Page navigation example">
-                                                                        <ul class="pagination justify-content-center">
-                                                                          <li class="page-item disabled">
-                                                                            <a class="page-link" href="#" tabindex="-1"><</a>
-                                                                          </li>
-                                                                          <li class="page-item active" @click.prevent="getProductsType(this, 1)"><a class="page-link" href="#">1</a></li>
-                                                                          <li class="page-item" @click.prevent="getProductsType(this, 2)"><a class="page-link" href="#">2</a></li>
-                                                                          <li class="page-item" @click.prevent="getProductsType(this, 3)"><a class="page-link" href="#">3</a></li>
-                                                                          <li class="page-item" >
-                                                                            <a class="page-link" href="#">></a>
-                                                                          </li>
-                                                                        </ul>
-                                                                    </nav>
+                                                                </div>
+                                                                <nav aria-label="Page navigation example">
+                                                                    <ul class="pagination justify-content-center">
+                                                                        <li class="page-item" id="page-link-previous" @click.prevent="getProductsType(true,type.page-1)">
+                                                                            <button class="page-link"><</button>
+                                                                        </li>
+                                                                        <template v-for="pag in type.paginate">
+                                                                            <li class="page-item" @click.prevent="getProductsType(false,pag)" :id="`page-item-`+pag"><a class="page-link" href="#">@{{pag}}</a></li>
+                                                                        </template>
+                                                                        <li class="page-item" id="page-link-next" @click.prevent="getProductsType(true,type.page+1)">
+                                                                            <button class="page-link">@{{activePage}}</button>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <p class="text-center mt-2">Mostrando @{{type.sum}} de @{{type.count}}</p>
+                                                                </nav>
                                                             </div>
                                                         </div>
                                                     </div>

@@ -37309,6 +37309,16 @@ window.shortText = function (text) {
   }
 
   return text;
+};
+
+window.showSpinner = function () {
+  var loadingDiv = document.getElementById('loading');
+  loadingDiv.style.visibility = 'visible';
+};
+
+window.hideSpinner = function () {
+  var loadingDiv = document.getElementById('loading');
+  loadingDiv.style.visibility = 'hidden';
 }; // window.Vue = require('vue');
 // import VueRouter from 'vue-router'
 // Vue.use(VueRouter)

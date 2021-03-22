@@ -4,7 +4,9 @@ var detail = new Vue({
     el:"#product_detail_vue",
     data:{
         reference:{},
-        activities:[],
+        type:{
+            references: []
+        },
         toast: Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -17,7 +19,8 @@ var detail = new Vue({
         this.pushReference($("#info_reference").data('id'), $("#info_reference").data('stock'), $("#info_reference").data('price'), $("#info_reference").data('price_with_discount'), 1, $("#info_reference").data('name'), $("#info_reference").data('image'),)
         this.setPercentage(this.reference.price, this.reference.price_with_discount)
         this.validateStock(this.reference.stock)
-        this.getProductsType(1,1)
+        this.getProductsType(false,1)
+        
     },
     methods: {
         selectReference(id,stock,price, price_with_discount,quantity, product_name, image){
@@ -143,15 +146,48 @@ var detail = new Vue({
 
             
         },
-        getProductsType(el, page, type='actividad'){
+        activeOrInactiveNextAndPrevious(page){
+            // let page = this.type.page
+            // logCompany(p, page)
+            // page = p
+            if (page > this.type.paginate) {
+                document.querySelector("#page-link-next>button").disabled = true
+                document.getElementById("page-link-next").classList.add("disabled")
+                return false
+            }else{
+                document.querySelector("#page-link-next>button").disabled = false
+                document.getElementById("page-link-next").classList.remove("disabled")
+            }
+            logCompany(page)
+            if (page <= 0) {
+                document.querySelector("#page-link-previous>button").disabled = true
+                document.getElementById("page-link-previous").classList.add("disabled")
+                return false
+            }else{
+                document.querySelector("#page-link-previous>button").disabled = false
+                document.getElementById("page-link-previous").classList.remove("disabled")
+            }
 
+            return true
+        },
+        getProductsType(validate, page, type='actividad'){
+            logCompany(this.activeOrInactiveNextAndPrevious(page))
+            if (validate && !this.activeOrInactiveNextAndPrevious(page)) {
+                logCompany("No har nada mas por consultar")
+                return
+            }
+            showSpinner()
             axios.get(`/api/product/type/${type}/${page}`).then(resp => {
                 if (resp.data.code == 200) {
-                    this.activities = resp.data.data
+                    this.type = resp.data.data
+                    this.type.paginate = Math.ceil(this.type.count/this.type.limit)
+                    this.type.page = page
+                    // this.activePaginate(page)
                 }
-                logCompany(resp);
+                hideSpinner()
             }).catch(err => {
                 logCompany(err)
+                hideSpinner()
             })
         },
         renderProductType(data){
@@ -197,7 +233,27 @@ var detail = new Vue({
         
 
             return shortText(text, length)
-        }
+        },
+        
 
     },
+
+    computed:{
+        activePage(){
+            let page = this.type.page;
+            for (let index = 1; index <= this.type.paginate; index++) {
+                let el = document.getElementById(`page-item-${index}`)
+                el && el.classList.remove("active")
+            }
+            this.activeOrInactiveNextAndPrevious(page)
+
+            let el2 = document.getElementById(`page-item-${page}`)
+            
+            el2 && el2.classList.add("active")
+
+            this.type.page == this.type.paginate ? this.type.sum = this.type.count:this.type.sum = this.type.limit * this.type.page 
+
+            return ">"
+        }
+    }
 })

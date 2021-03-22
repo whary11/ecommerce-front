@@ -815,6 +815,16 @@
        <div><i class="fa fa-angle-double-up"></i></div>
     </div>
     {{--  tap to top end  --}}
+
+    {{-- Init Loading --}}
+
+    <div class="container"> 
+        <div id="loading" class="loading">
+          Loading&#8230;     
+        </div>
+        {{-- <input type="button" value="save" / id="saveBtn" onClick="showSpinner()"> --}}
+      </div>
+    {{-- End Loading --}}
     
     {{--  latest jquery --}}
     <script src="/js/vue.js"></script>

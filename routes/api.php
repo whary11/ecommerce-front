@@ -22,7 +22,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('purchase')->group( function(){
     Route::post('create', 'PurchaseController@create');
+    Route::post('response', 'PurchaseController@responseEpaycode');
 });
+
+
 
 
 Route::prefix('product')->group( function(){

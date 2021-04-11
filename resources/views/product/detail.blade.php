@@ -254,13 +254,13 @@
                                 <ul class="color-variant">
 
                                     @foreach ($product["references"] as $key=> $refe)
-                                    <span class="d-none" id="info_reference" data-id="{{$refe["id"]}}" data-price="{{$refe["price"]}}" data-price_with_discount="{{($refe["price_with_discount"])}}" data-stock="{{$refe["stock"]}}" data-name="{{$product["name"]}}" data-image="{{isset($refe["images"][0])?$refe["images"][0]["url"]:"-"}}" class="hr_reference"></span>
+                                    <span class="d-none" id="info_reference" data-number_activities="{{$product["number_activities"]}}" data-id="{{$refe["id"]}}" data-price="{{$refe["price"]}}" data-price_with_discount="{{($refe["price_with_discount"])}}" data-stock="{{$refe["stock"]}}" data-name="{{$product["name"]}}" data-image="{{isset($refe["images"][0])?$refe["images"][0]["url"]:"-"}}" class="hr_reference"></span>
                                         @if ($refe["view_front"] == 1)
                                             @if (isset($refe["color"]))
                                             <div class="reference_selected" id="div_reference_{{$refe["id"]}}">
-                                                <li @click.prevent="selectReference({{$refe["id"]}},{{$refe["stock"]}},{{$refe["price"]}},{{$refe["price_with_discount"]}}, 1, '{{$product["name"]}}', '{{ isset($refe["images"][0])?$refe["images"][0]["url"]:""}}')" class="bg-light0" id="reference_{{$refe["id"]}}" style="background:{{$refe["color"]}} !important"></li>
+                                                <li @click.prevent="selectReference({{$refe["id"]}},{{$refe["stock"]}},{{$refe["price"]}},{{$refe["price_with_discount"]}}, 1, '{{$product["name"]}}', '{{ isset($refe["images"][0])?$refe["images"][0]["url"]:""}}', {{$product["number_activities"]}})" class="bg-light0" id="reference_{{$refe["id"]}}" style="background:{{$refe["color"]}} !important"></li>
                                                 @if ($key == 0)
-                                                <hr data-id="{{$refe["id"]}}" data-price="{{$refe["price"]}}" data-price_with_discount="{{$refe["price_with_discount"]}}" data-stock="{{$refe["stock"]}}" class="hr_reference">
+                                                <hr data-number_activities="{{$product["number_activities"]}}" data-id="{{$refe["id"]}}" data-price="{{$refe["price"]}}" data-price_with_discount="{{$refe["price_with_discount"]}}" data-stock="{{$refe["stock"]}}" class="hr_reference">
                                                 @endif
                                             </div>
                                             {{-- Si es una referencia diferente a color --}}

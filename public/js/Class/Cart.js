@@ -230,6 +230,21 @@ class Cart {
 
     }
 
+    getCountActivitiesByRferenceId(reference_id){
+        let count = 0
+        let refe = this.cart.references.filter(r => r.id = reference_id)
+
+        refe = refe.length > 0 ? refe[0]: {}
+
+        if(refe.id){
+            logCompany(refe)
+            count = refe.activities.length
+        }
+
+
+        return count
+    }
+
     
 
     removeCart(){}

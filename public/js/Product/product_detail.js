@@ -16,14 +16,14 @@ var detail = new Vue({
         })
     },
     mounted() {
-        this.pushReference($("#info_reference").data('id'), $("#info_reference").data('stock'), $("#info_reference").data('price'), $("#info_reference").data('price_with_discount'), 1, $("#info_reference").data('name'), $("#info_reference").data('image'),)
+        this.pushReference($("#info_reference").data('id'), $("#info_reference").data('stock'), $("#info_reference").data('price'), $("#info_reference").data('price_with_discount'), 1, $("#info_reference").data('name'), $("#info_reference").data('image'), $("#info_reference").data('number_activities'))
         this.setPercentage(this.reference.price, this.reference.price_with_discount)
         this.validateStock(this.reference.stock)
         this.getProductsType(false,1)
         
     },
     methods: {
-        selectReference(id,stock,price, price_with_discount,quantity, product_name, image){
+        selectReference(id,stock,price, price_with_discount,quantity, product_name, image,number_activities){
             let jq_div_ref = $(`#div_reference_${id}`)
             let jq_div_price = $("#price")
             let jq_div_with_discount = $("#price_with_discount")
@@ -33,11 +33,12 @@ var detail = new Vue({
             // Cambiar el precio
             jq_div_price.text(`$ ${formatCurrency(price)}`)
             jq_div_with_discount.text(`$ ${formatCurrency(price_with_discount)}`)
-            this.pushReference(id,stock,price, price_with_discount, quantity, product_name, image)
+            this.pushReference(id,stock,price, price_with_discount, quantity, product_name, image, number_activities)
             this.validateStock(stock)
             this.setPercentage(price, price_with_discount)
         },
-        pushReference(id, stock, price, price_with_discount, quantity, product_name, image){
+        pushReference(id, stock, price, price_with_discount, quantity, product_name, image, number_activities){
+            logCompany("number_activities",number_activities)
             this.reference.id = id
             this.reference.stock = stock
             this.reference.price = price
@@ -45,6 +46,7 @@ var detail = new Vue({
             this.reference.quantity = quantity
             this.reference.product_name = product_name
             this.reference.image = image
+            this.reference.number_activities = number_activities
         },
         updateQuantity(type){
             
@@ -117,8 +119,10 @@ var detail = new Vue({
         addCart(){
             $("#no-stock-in-add").text("")
             let cart = new Cart()
+            
             let exist = cart.validateExistReference(this.reference.id)
             let notify = false
+
             logCompany(exist, this.reference.id)
             if (exist.length >0) {
                 if (exist[0].quantity < this.reference.stock) {
@@ -221,6 +225,16 @@ var detail = new Vue({
         },
         addActivity(ref){
             let cart = new Cart()
+            let quantity = cart.getCountActivitiesByRferenceId(this.reference.id)
+
+            if(quantity >= this.reference.number_activities){
+                this.toast.fire({
+                    icon: 'warning',
+                    html: `Ya ha seleccionado las <b>${this.reference.number_activities}</b> actividades permitidas.`, 
+                })
+                return;
+            }
+            logCompany("addCart",cart.getCountActivitiesByRferenceId(this.reference.id), this.reference)
             let resp = cart.addActivity(this.reference,ref)
             if (resp) {
                 this.toast.fire({

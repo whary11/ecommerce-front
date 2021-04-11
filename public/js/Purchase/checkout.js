@@ -3,6 +3,44 @@ var detail = new Vue({
     data:{
         cart: {
 
+        },
+        handler: ePayco.checkout.configure({
+            key: 'e364ec4e20f5c87af52885f148d6c9c1',
+            test: true
+        }),
+        dateEpayco:{
+            //Parametros compra (obligatorio)
+            name: "Compra en Keny",
+            description: "Compra en Keny",
+            invoice: "1234",
+            currency: "cop",
+            amount: "12000",
+            tax_base: "0",
+            tax: "0",
+            country: "co",
+            lang: "es",
+  
+            //Onpage="false" - Standard="true"
+            external: "true",
+  
+  
+            //Atributos opcionales
+            extra1: "extra1",
+            // extra2: "extra2",
+            // extra3: "extra3",
+            confirmation: "http://secure2.payco.co/prueba_curl.php",
+            response: "http://secure2.payco.co/prueba_curl.php",
+  
+            //Atributos cliente
+            name_billing: "Andres Perez",
+            // address_billing: "Carrera 19 numero 14 91",
+            // type_doc_billing: "cc",
+            // mobilephone_billing: "3050000000",
+            // number_doc_billing: "100000000",
+  
+           //atributo deshabilitación metodo de pago
+            methodsDisable: []
+  
         }
     },
     mounted() {
@@ -24,10 +62,13 @@ var detail = new Vue({
             let references = []
             this.cart.cart.references.map(item =>{
                 let activities = []
+
+                
+                
                 
                 if (item.activities) {
                     item.activities.map(act => {
-                        logCompany({id: act.id,quantity:act.quantity,price_with_discount:act.price_with_discount})
+                        // logCompany({id: act.id,quantity:act.quantity,price_with_discount:act.price_with_discount})
                         activities.push({id: act.id,quantity:act.quantity,price_with_discount:act.price_with_discount})
                         
                     })
@@ -39,45 +80,99 @@ var detail = new Vue({
                     activities
                 })
             })
-            let address = this.formDirection(info)
+            // "user":{
+            //     "email":"drddd@keny.com",
+            //     "name":"Drdd",
+            //     "last_name": "renteriadd"
+            // },
+            // "address":{
+            //     "via_generator":"Calle",
+            //     "value_via_generator": "8 a",
+            //     "via_number": "92",
+            //     "house": "71",
+            //     "principal":1
+            // },
+            // "phone":{
+            //     "country_id":1,
+            //     "phone":"3043788454",
+            //     "principal":1
+            // },
+            // "total":10000,
+            // "city_id": 1,
+            // "platform": "WEB"
+            let address = this.getDirection(info)
 
-            delete info.number1
-            delete info.number2
-            delete info.number3
-            delete info.via
+            let user = {
+                "email": info.email,
+                "name": info.name,
+                "last_name": info.surname
+            }
+
+            let phone = {
+                "country_id":1,
+                "phone": info.phone,
+                "principal":1
+            }
             let data = {
                 references,
-                // ...info,
                 platform: "WEB",
-                // address,
-                address_id:1,
-                phone_id:1,
-                city_id:1,
+                address,
+                phone,
+                user,
+                city_id: Number(info.city),
                 total: this.cart.getTotalCart()
             }
             return data
         },
-        formDirection(data){
-            return `${data.via} ${data.number1} ${data.number2} ${data.number3}, ${data.city}`
+        getDirection(data){
+            return {
+                via_generator: data.via,
+                value_via_generator: data.number1,
+                via_number: data.number2,
+                house: data.number3,
+                principal: 1
+            }
         },
         sendOrder(){
-            axios.post("/api/purchase/create", this.getDataOrder()).then(resp => {
+            showSpinner()
+            logCompany("Sending... ",this.getDataOrder())
+            let data = this.getDataOrder()
+
+            // return
+            axios.post("/api/purchase/create", data).then(resp => {
+                logCompany(resp.data)
                 if (resp.data.code == 200) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Genial !',
-                        html: `Nuestro equipo ya tiene su pedido, conserva este número <b>${resp.data.id}</b>`,
-                      }).then((result) => {
-                        logCompany(result)
-                        if (result.isConfirmed) {
-                            // window.location="/";
-                        } else {
-                            // window.location="/";
-                        }
-                      })
+                    // Levantar el pago a epayco
+                    this.dateEpayco.invoice = resp.data.id
+                    this.dateEpayco.extra1 = resp.data.id
+                    this.dateEpayco.name_billing =  `${data.user.name} ${data.user.last_name}`
+                    this.dateEpayco.amount = data.total
+                    this.dateEpayco.email_billing = data.user.email
+                    this.dateEpayco.response = `${location.origin}/api/purchase/response`
+                    // this.dateEpayco.address_billing = 
+
+                    console.log(this.dateEpayco);
+                    // return this.dateEpayco
+                    this.handler.open(this.dateEpayco)
+
+                    // Swal.fire({
+                    //     icon: 'success',
+                    //     title: 'Genial !',
+                    //     html: `Nuestro equipo ya tiene su pedido, conserva este número <b>${resp.data.id}</b>`,
+                    //   }).then((result) => {
+                    //     logCompany(result)
+                    //     if (result.isConfirmed) {
+                    //         // window.location="/";
+                    //     } else {
+                    //         // window.location="/";
+                    //     }
+                    //   })
                 }
+                hideSpinner()
             })
             .catch(err => {
+                hideSpinner()
+
                 console.error(err);
             });
         }

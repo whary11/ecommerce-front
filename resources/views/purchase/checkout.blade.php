@@ -50,10 +50,10 @@
                                         <div class="form-group col-md-12 col-sm-12 col-xs-12">
                                             <div class="field-label">*Ciudad</div>
                                             <select required name="city">
-                                                <option selected>Bogotá</option>
-                                                <option>Medellín</option>
-                                                <option>Cali</option>
-                                                <option>Barranquilla</option>
+                                                <option selected value="1">Bogotá</option>
+                                                <option value="2">Medellín</option>
+                                                <option value="3">Cali</option>
+                                                <option value="4">Barranquilla</option>
                                             </select>
                                         </div>
 
@@ -145,6 +145,8 @@
     
     <!-- footer end -->
     @section('scripts')
+        <script type="text/javascript" src="https://checkout.epayco.co/checkout.js">   </script>
+
         <script src="/js/Purchase/checkout.js"></script>
 
     @endsection

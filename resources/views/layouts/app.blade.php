@@ -65,7 +65,7 @@
 
     {{--  Theme css  --}}
     <link rel="stylesheet" type="text/css" href="/assets/css/color1.css" media="screen" id="color">
-
+    <link rel="stylesheet" href="/css/loading.css">
     <style>
         .reference_selected{
             display: inline-block;

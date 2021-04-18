@@ -41,14 +41,11 @@ window.shortText = (text, stringLength = 20) => {
 
 window.showSpinner = () => {
   var loadingDiv = document.getElementById('loading');
-
-  console.log(loadingDiv);
   loadingDiv.style.visibility = 'visible';
 }
 
 window.hideSpinner = () => {
   var loadingDiv = document.getElementById('loading');
-
   loadingDiv.style.visibility = 'hidden';
 }
 // window.Vue = require('vue');

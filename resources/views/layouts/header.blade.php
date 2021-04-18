@@ -6,7 +6,7 @@
                 <div class="col-lg-6">
                     <div class="header-contact">
                         <ul>
-                            <li>Welcome to Our store Multikart</li>
+                            <li>Bienvenido a Keny, un mundo sensorial.</li>
                             <li><i class="fa fa-phone" aria-hidden="true"></i>Call Us: 123 - 456 - 7890</li>
                         </ul>
                     </div>
@@ -16,18 +16,26 @@
                         <li class="mobile-wishlist"><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
                         </li>
                         <li class="onhover-dropdown mobile-account">
-                            <i class="fa fa-user" aria-hidden="true"></i> My Account
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                                @if (session()->exists('user_123'))
+                                    <h4>{{session()->get('user_info')->name}} {{session()->get('user_info')->last_name}}</h4>
+                                @else
+                                    <h4>My account</h4>
+                                @endif
                             <ul class="onhover-show-div">
-                                <li>
-                                    <a href="#" data-lng="en">
-                                        Login
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-lng="es">
-                                        Logout
-                                    </a>
-                                </li>
+                                @if (session()->exists('user_123'))
+                                    <li>
+                                        <a href="#" data-lng="es">
+                                            Logout
+                                        </a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a href="#" data-lng="en">
+                                            Login
+                                        </a>
+                                    </li>
+                                @endif
                             </ul>
                         </li>
                     </ul>
@@ -35,7 +43,6 @@
             </div>
         </div>
     </div>
-
     <div class="container">
         <div class="row">
             <div class="col-sm-12">

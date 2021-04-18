@@ -21,9 +21,23 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::prefix('purchase')->group( function(){
-    Route::post('create', 'PurchaseController@create');
-    Route::post('response', 'PurchaseController@responseEpaycode');
+    Route::post('response', 'PurchaseController@responseEpayco');
+    Route::get('response', 'PurchaseController@responseEpayco');
+    Route::post('confirmation', 'PurchaseController@confirmationEpayco');
 });
+
+Route::prefix('auth')->group(function () {
+    Route::post('/register', "Auth\LoginController@register");
+    Route::post('/login', "Auth\LoginController@login");
+});
+
+
+
+
+
+
+
+
 
 
 

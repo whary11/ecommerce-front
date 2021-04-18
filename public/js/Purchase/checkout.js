@@ -12,9 +12,9 @@ var detail = new Vue({
             //Parametros compra (obligatorio)
             name: "Compra en Keny",
             description: "Compra en Keny",
-            invoice: "1234",
+            // invoice: "1234",
             currency: "cop",
-            amount: "12000",
+            // amount: "12000",
             tax_base: "0",
             tax: "0",
             country: "co",
@@ -25,14 +25,14 @@ var detail = new Vue({
   
   
             //Atributos opcionales
-            extra1: "extra1",
+            // extra1: "extra1",
             // extra2: "extra2",
             // extra3: "extra3",
-            confirmation: "http://secure2.payco.co/prueba_curl.php",
+            // confirmation: "http://secure2.payco.co/prueba_curl.php",
             response: "http://secure2.payco.co/prueba_curl.php",
   
             //Atributos cliente
-            name_billing: "Andres Perez",
+            // name_billing: "Andres Perez",
             // address_billing: "Carrera 19 numero 14 91",
             // type_doc_billing: "cc",
             // mobilephone_billing: "3050000000",
@@ -139,7 +139,7 @@ var detail = new Vue({
             let data = this.getDataOrder()
 
             // return
-            axios.post("/api/purchase/create", data).then(resp => {
+            axios.post("/api/purchase/create", data).then( async resp => {
                 logCompany(resp.data)
                 if (resp.data.code == 200) {
                     // Levantar el pago a epayco
@@ -149,24 +149,9 @@ var detail = new Vue({
                     this.dateEpayco.amount = data.total
                     this.dateEpayco.email_billing = data.user.email
                     this.dateEpayco.response = `${location.origin}/api/purchase/response`
-                    // this.dateEpayco.address_billing = 
-
+                    this.dateEpayco.confirmation = `${location.origin}/api/purchase/confirmation`
                     console.log(this.dateEpayco);
-                    // return this.dateEpayco
-                    this.handler.open(this.dateEpayco)
-
-                    // Swal.fire({
-                    //     icon: 'success',
-                    //     title: 'Genial !',
-                    //     html: `Nuestro equipo ya tiene su pedido, conserva este número <b>${resp.data.id}</b>`,
-                    //   }).then((result) => {
-                    //     logCompany(result)
-                    //     if (result.isConfirmed) {
-                    //         // window.location="/";
-                    //     } else {
-                    //         // window.location="/";
-                    //     }
-                    //   })
+                    await this.handler.open(this.dateEpayco)
                 }
                 hideSpinner()
             })
